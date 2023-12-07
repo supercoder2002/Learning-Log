@@ -1,12 +1,170 @@
 {% extends "learning_logs/base.html" %}
 
 {% block page_header %}
-	<div class="jumbotron">
-		<h1 class="display-3">Track your learning.</h1>
-
-		<p>Make your own Learning Log, and keep a list of the topics you're learning about.
-			Whenever you learn something new about a topic, make an entry summarizing what you learned.</p>
-
-		<a class="btn btn-lg btn-primary" href="{% url 'users:register' %}" role="button">Register &raquo;</a>
-	</div>
+	<!DOCTYPE html>
+	<html>
+	    <head>
+		<title>Noughts and Crosses</title>
+		<style>
+		    .row div {
+			padding: 10px;
+			border: 1px solid black;
+			height: 30px;
+			width: 30px;
+			float: left;
+		    }
+		    .row {
+			clear: both;
+		    }
+		</style>
+	    </head>
+	    <body>
+	    
+		Click to play X's and O's.<br/>
+		
+		<div>
+		    <div class="row">
+			<div id="1" onclick="place(this)"></div>
+			<div id="2" onclick="place(this)"></div>
+			<div id="3" onclick="place(this)"></div>
+		    </div>
+		    
+		    <div class="row">
+			<div id="4" onclick="place(this)"></div>
+			<div id="5" onclick="place(this)"></div>
+			<div id="6" onclick="place(this)"></div>
+		    </div>
+		    
+		    <div class="row">
+			<div id="7" onclick="place(this)"></div>
+			<div id="8" onclick="place(this)"></div>
+			<div id="9" onclick="place(this)"></div>
+		    </div>
+	
+		</div>
+		
+	
+		
+		<script>
+		    var currentPlayer = "O";
+		    won = false;
+		    whoWon = ""
+		    
+		    let wins = [
+			[1,2,3],
+			[4,5,6],
+			[7,8,9],
+			[1,4,7],
+			[2,5,8],
+			[3,6,9],
+			[1,5,9],
+			[3,5,7]
+		    ];
+		    let boxInnerText = ["","","","","","","","",""]
+		    
+		    
+		    function place(box) {
+			if (won == true) {
+			    alert("The " + whoWon + " player has already won! Better luck next time!")
+			}
+			else {
+			    
+			    if(box.innerText != "") return;
+			    box.innerText = currentPlayer;
+			    playerTurnNow = currentPlayer;
+			
+			    if (currentPlayer == "O") {
+				currentPlayer = "X";
+			    }
+			    else {
+				currentPlayer = "O";
+			    }
+			
+			    messageIndi = checkGameWins(playerTurnNow);
+			    if (messageIndi == 2) {
+				alert(playerTurnNow + " is the winner!");
+			    }
+			    else if (messageIndi == 1) {
+				alert("It is a tie!")
+			    }
+			}
+			
+			
+		    }
+		    
+		    function checkGameWins(playerNow) {
+			boxes = getBoxElements(9);
+			for (var i = 0; i < wins.length; i++) {
+			    let row = wins[i];
+			    
+			    
+			    rone = row[0].toString();
+			    rone = document.getElementById(rone);
+			    rtwo = row[1].toString();
+			    rtwo = document.getElementById(rtwo);
+			    rthree = row[2].toString();
+			    rthree = document.getElementById(rthree);
+			    
+			    
+			    result = checkRows(rone, rtwo, rthree);
+			    tie = ifFilled(boxes)
+			    
+			    if (result == 10){
+				whoWon = playerNow
+				won = true
+				return 2;
+			    }
+			    else {
+				if (tie) {
+				    return 1;
+				}
+			    }
+	
+			}
+			  return 0; 
+	
+			
+		    }
+		    function checkRows(first, second, third) {
+			firstText = first.innerText;
+			secondText = second.innerText;
+			thirdText = third.innerText;
+			
+			if (firstText == "") return 0;
+			if (firstText == secondText && secondText == thirdText) {
+			    return 10;
+			}
+			else {
+			    return 5;
+			}
+		    }
+		    function getBoxElements(amount) {
+			let boxElements = []
+			for (var i = 1; i <= amount; i++) {
+			    stringInt = i.toString();
+			    boxElement = document.getElementById(stringInt);
+			    boxElements.push(boxElement);
+	 
+			}
+			return boxElements;
+		    }
+		    function ifFilled(all) {
+			filled = true;
+			
+			for (var i = 0; i < all.length; i++) {
+			    
+			    if (all[i].innerText == "") {
+				filled = false;
+			    }
+				
+			}
+			return filled;
+	
+		    }
+		    
+	
+	
+		</script>
+	    </body>
+	</html>
 {% endblock page_header %}
