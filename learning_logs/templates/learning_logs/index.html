@@ -85,7 +85,7 @@
 				alert(playerTurnNow + " is the winner!");
 			    }
 			    else if (messageIndi == 1) {
-				alert("What is a tie!")
+				alert("It's a tie!")
 			    }
 			}
 			
@@ -129,7 +129,9 @@
 			firstText = first.innerText;
 			secondText = second.innerText;
 			thirdText = third.innerText;
-			
+			alert(firstText)
+			alert(secondText)
+			alert(thirdText)
 			if (firstText == "") return 0;
 			if (firstText == secondText && secondText == thirdText) {
 			    return 10;
