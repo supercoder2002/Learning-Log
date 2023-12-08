@@ -94,6 +94,7 @@
 		    
 		    function checkGameWins(playerNow) {
 			boxes = getBoxElements(9);
+			tie = ifFilled(boxes)
 			for (var i = 0; i < wins.length; i++) {
 			    let row = wins[i];
 			    
@@ -107,21 +108,21 @@
 			    
 			    
 			    result = checkRows(rone, rtwo, rthree);
-			    tie = ifFilled(boxes)
+			    
 			    
 			    if (result == 10){
 				whoWon = playerNow
 				won = true
 				return 2;
 			    }
-			    else {
-				if (tie) {
-				    return 1;
-				}
-			    }
-	
+				
 			}
+			if (tie) {
+			    return 1;
+			}
+			else {
 			  return 0; 
+			}
 	
 			
 		    }
